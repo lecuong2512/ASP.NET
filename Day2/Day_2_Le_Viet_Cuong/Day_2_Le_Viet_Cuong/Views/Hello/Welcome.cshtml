@@ -1,0 +1,16 @@
+@{
+    ViewData["Title"] = "Welcome";
+    int count = ViewData["ID"] != null ? (int)ViewData["ID"]! : 1;
+    string message = ViewBag.message as string ?? "Cuong";
+}
+
+<h2>Welcome</h2>
+<p>Dinh tuyen bang Custom Conventional Route: <code>/chao-mung/{name}/{id}</code></p>
+<ul>
+    @for (int i = 0; i < count; i++)
+    {
+        <li>Xin chao @message (lan @(i + 1))</li>
+    }
+</ul>
+
+@await Html.PartialAsync("_StudentCardPartial")

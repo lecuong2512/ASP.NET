@@ -1,0 +1,10 @@
+@{
+    ViewData["Title"] = "Chi tiet san pham";
+}
+
+<h2>Chi tiet san pham (Attribute Routing)</h2>
+<p>Action su dung: <code>[HttpGet("chi-tiet/{id:int}")]</code></p>
+<p><strong>Ma san pham:</strong> @ViewBag.ProductId</p>
+<p><a href="/san-pham">Quay lai danh sach</a></p>
+
+@await Component.InvokeAsync("CourseList", new { title = "Danh sach hoc phan lien quan" })

@@ -1,0 +1,12 @@
+## Visual Studio & .NET temporary files
+.vs/
+**/bin/
+**/obj/
+*.user
+*.userprefs
+*.suo
+*.ide/
+*.swp
+
+## Ignore day1 local working folder
+day1/

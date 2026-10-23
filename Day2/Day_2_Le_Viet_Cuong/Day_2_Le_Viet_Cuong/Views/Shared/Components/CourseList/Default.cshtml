@@ -1,0 +1,18 @@
+@model IEnumerable<Day_2_Le_Viet_Cuong.Models.CourseItem>
+
+<div class="card mb-3">
+    <div class="card-header bg-light">
+        <strong>ViewComponent:</strong> @ViewBag.ComponentTitle
+    </div>
+    <div class="card-body">
+        <ul class="list-group">
+            @foreach (var item in Model)
+            {
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <span>#@item.Id - @item.Title (@item.Instructor)</span>
+                    <span class="text-secondary">@item.Status</span>
+                </li>
+            }
+        </ul>
+    </div>
+</div>

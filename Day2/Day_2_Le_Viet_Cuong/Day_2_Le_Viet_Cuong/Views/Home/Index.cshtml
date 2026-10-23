@@ -1,0 +1,14 @@
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center mb-4">
+    <h1 class="display-4">Welcome</h1>
+    <p>Bai thuc hanh Day 2 - Le Viet Cuong</p>
+</div>
+
+<!-- Partial View -->
+@await Html.PartialAsync("_StudentCardPartial")
+
+<!-- ViewComponent -->
+@await Component.InvokeAsync("CourseList", new { title = "Danh sach hoc phan" })
