@@ -7,6 +7,8 @@
 *.suo
 *.ide/
 *.swp
+.playwright-mcp/
 
-## Ignore day1 local working folder
-day1/
+## Ignore local root working folders
+/day1/
+/Day3__Le_Viet_Cuong/
