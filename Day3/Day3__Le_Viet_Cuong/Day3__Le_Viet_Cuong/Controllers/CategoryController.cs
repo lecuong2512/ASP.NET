@@ -7,6 +7,13 @@ namespace Day3__Le_Viet_Cuong.Controllers
 {
     public class CategoryController : Controller
     {
+        // ilongger<categorycontroler> _longer
+        private readonly ILogger<CategoryController> _logger;
+        //public CategoryController(ILogger<CategoryController> logger)
+        public CategoryController(ILogger<CategoryController> logger)
+        {
+            _logger = logger;
+        }
         // GET: CategoryController
         public ActionResult Index()
         {
@@ -17,6 +24,8 @@ namespace Day3__Le_Viet_Cuong.Controllers
         // GET: CategoryController/Details/5
         public ActionResult Details(int id)
         {
+            _logger.LogInformation("Details action called with id: {Id}", id);
+            _logger.LogWarning("This is a warning message for Details action with id: {Id}", id);
             // lay ra category co id truyen vao tu seeddata
             var category = SeedData.categories.FirstOrDefault(c => c.Id == id);
             if (category is null)
@@ -101,6 +110,11 @@ namespace Day3__Le_Viet_Cuong.Controllers
             if (existingCategory is null)
             {
                 return NotFound();
+            }
+            if (SeedData.products.Any(p => p.CategoryId == existingCategory.Id))
+            {
+                ModelState.AddModelError(string.Empty, "Cannot delete a category that contains products.");
+                return View(existingCategory);
             }
             SeedData.categories.Remove(existingCategory);
             return RedirectToAction(nameof(Index));

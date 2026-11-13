@@ -1,0 +1,74 @@
+@model Day3__Le_Viet_Cuong.Models.ProductListViewModel
+
+@{
+    ViewData["Title"] = "Products";
+}
+
+<h1>Products</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Description</th>
+            <th>Category</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Products) {
+        <tr>
+            <td>@Html.DisplayFor(model => item.Id)</td>
+            <td>@Html.DisplayFor(model => item.Name)</td>
+            <td>@Html.DisplayFor(model => item.Price)</td>
+            <td>@Html.DisplayFor(model => item.Description)</td>
+            <td>@item.Category?.Name</td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+@if (Model.TotalPages > 0)
+{
+    <nav aria-label="Product pagination" class="d-flex gap-2">
+        @if (Model.HasPreviousPage)
+        {
+            <a asp-action="Index" asp-route-page="@(Model.PageNumber - 1)">Previous</a>
+        }
+        else
+        {
+            <span aria-disabled="true">Previous</span>
+        }
+
+        @for (var page = 1; page <= Model.TotalPages; page++)
+        {
+            if (page == Model.PageNumber)
+            {
+                <span aria-current="page">@(page)</span>
+            }
+            else
+            {
+                <a asp-action="Index" asp-route-page="@(page)">@(page)</a>
+            }
+        }
+
+        @if (Model.HasNextPage)
+        {
+            <a asp-action="Index" asp-route-page="@(Model.PageNumber + 1)">Next</a>
+        }
+        else
+        {
+            <span aria-disabled="true">Next</span>
+        }
+    </nav>
+}
