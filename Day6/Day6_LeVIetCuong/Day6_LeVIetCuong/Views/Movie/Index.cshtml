@@ -1,0 +1,81 @@
+@model IEnumerable<Day6_LeVIetCuong.Models.Movie>
+
+@{
+    ViewData["Title"] = "Movie Management";
+    var hasFilter = !string.IsNullOrWhiteSpace(ViewData["CurrentFilter"] as string)
+        || ViewData["CurrentGenreId"] != null;
+}
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-12">
+            <h2 class="mb-3">Movie Management</h2>
+
+            <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+                <a asp-action="Create" class="btn btn-success">+ Create New Movie</a>
+
+                <form asp-action="Index" method="get" class="d-flex flex-wrap gap-2">
+                    <input type="text"
+                           name="searchString"
+                           value="@ViewData["CurrentFilter"]"
+                           class="form-control"
+                           style="width: auto; min-width: 200px;"
+                           placeholder="Search title..." />
+                    <select name="genreId"
+                            asp-items="ViewBag.GenreFilter"
+                            class="form-select"
+                            style="width: auto; min-width: 170px;">
+                        <option value="">All Genres</option>
+                    </select>
+                    <button type="submit" class="btn btn-outline-primary">Search</button>
+                    @if (hasFilter)
+                    {
+                        <a asp-action="Index" class="btn btn-outline-secondary">Reset</a>
+                    }
+                </form>
+            </div>
+
+            <table class="table table-bordered table-striped align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th colspan="6" class="text-center fs-5">Movie</th>
+                    </tr>
+                    <tr>
+                        <th style="width: 70px;">Id</th>
+                        <th>Title</th>
+                        <th style="width: 100px;">Date</th>
+                        <th style="width: 110px;">Duration</th>
+                        <th>Genre</th>
+                        <th style="width: 215px;">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (!Model.Any())
+                    {
+                        <tr>
+                            <td colspan="6" class="text-center text-muted py-3">No movies found.</td>
+                        </tr>
+                    }
+                    else
+                    {
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td class="text-end">@item.Id</td>
+                                <td>@item.Title</td>
+                                <td class="text-end">@item.ReleaseDate.Year</td>
+                                <td class="text-end">@item.Duration</td>
+                                <td>@item.Genre?.Name</td>
+                                <td>
+                                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-outline-success">Edit</a>
+                                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-outline-primary">Details</a>
+                                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-outline-danger">Delete</a>
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

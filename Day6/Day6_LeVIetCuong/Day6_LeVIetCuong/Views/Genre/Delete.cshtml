@@ -1,0 +1,47 @@
+@model Day6_LeVIetCuong.Models.Genre
+
+@{
+    ViewData["Title"] = "Delete Genre";
+    var hasMovies = Model.Movies != null && Model.Movies.Any();
+}
+
+<div class="container mt-4">
+    <h2>Delete Genre</h2>
+    <hr />
+
+    @if (!ViewData.ModelState.IsValid)
+    {
+        <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+    }
+
+    @if (hasMovies)
+    {
+        <div class="alert alert-warning" role="alert">
+            Thể loại <strong>@Model.Name</strong> hiện đang có <strong>@Model.Movies!.Count</strong> phim nên không thể xóa. Vui lòng đổi thể loại hoặc xóa các phim liên quan trước.
+        </div>
+    }
+    else
+    {
+        <p class="text-danger">Bạn có chắc chắn muốn xóa thể loại: <strong>@Model.Name</strong>?</p>
+    }
+
+    <dl class="row">
+        <dt class="col-sm-2">Id</dt>
+        <dd class="col-sm-10">@Model.Id</dd>
+
+        <dt class="col-sm-2">Name</dt>
+        <dd class="col-sm-10">@Model.Name</dd>
+
+        <dt class="col-sm-2">Movies Count</dt>
+        <dd class="col-sm-10">@(Model.Movies?.Count ?? 0)</dd>
+    </dl>
+
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="Id" />
+        @if (!hasMovies)
+        {
+            <button type="submit" class="btn btn-danger">Delete</button>
+        }
+        <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>

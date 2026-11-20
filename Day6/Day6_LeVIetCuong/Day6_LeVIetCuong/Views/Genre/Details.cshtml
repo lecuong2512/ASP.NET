@@ -1,0 +1,56 @@
+@model Day6_LeVIetCuong.Models.Genre
+
+@{
+    ViewData["Title"] = "Genre Details";
+    var movies = Model.Movies ?? Enumerable.Empty<Day6_LeVIetCuong.Models.Movie>();
+}
+
+<div class="container mt-4">
+    <h2>Genre Details</h2>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">Id</dt>
+        <dd class="col-sm-10">@Model.Id</dd>
+
+        <dt class="col-sm-2">Name</dt>
+        <dd class="col-sm-10">@Model.Name</dd>
+
+        <dt class="col-sm-2">Movies Count</dt>
+        <dd class="col-sm-10">@movies.Count()</dd>
+    </dl>
+
+    @if (movies.Any())
+    {
+        <h5 class="mt-4">Movies in this Genre</h5>
+        <table class="table table-bordered table-sm align-middle mt-2">
+            <thead class="table-light">
+                <tr>
+                    <th style="width: 70px;">Id</th>
+                    <th>Title</th>
+                    <th style="width: 100px;">Date</th>
+                    <th style="width: 110px;">Duration</th>
+                    <th style="width: 120px;">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var movie in movies.OrderBy(m => m.Id))
+                {
+                    <tr>
+                        <td class="text-end">@movie.Id</td>
+                        <td>@movie.Title</td>
+                        <td class="text-end">@movie.ReleaseDate.Year</td>
+                        <td class="text-end">@movie.Duration phút</td>
+                        <td>
+                            <a asp-controller="Movie" asp-action="Details" asp-route-id="@movie.Id" class="btn btn-sm btn-outline-primary">Details</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+
+    <div class="mt-3">
+        <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">Edit</a>
+        <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+    </div>
+</div>

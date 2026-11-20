@@ -1,0 +1,68 @@
+@model IEnumerable<Day6_LeVIetCuong.Models.Genre>
+
+@{
+    ViewData["Title"] = "Genres Management";
+    var hasFilter = !string.IsNullOrWhiteSpace(ViewData["CurrentFilter"] as string);
+}
+
+<div class="container mt-4">
+    <h2 class="mb-3">Genres Management</h2>
+
+    <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+        <div class="d-flex gap-2">
+            <a asp-action="Create" class="btn btn-success">+ Create New Genre</a>
+            <a asp-controller="Movie" asp-action="Index" class="btn btn-outline-secondary">Back to Movies</a>
+        </div>
+
+        <form asp-action="Index" method="get" class="d-flex gap-2">
+            <input type="text"
+                   name="searchString"
+                   value="@ViewData["CurrentFilter"]"
+                   class="form-control"
+                   placeholder="Search genre..." />
+            <button type="submit" class="btn btn-outline-primary">Search</button>
+            @if (hasFilter)
+            {
+                <a asp-action="Index" class="btn btn-outline-secondary">Reset</a>
+            }
+        </form>
+    </div>
+
+    <table class="table table-bordered table-striped align-middle">
+        <thead class="table-light">
+            <tr>
+                <th colspan="4" class="text-center fs-5">Genre</th>
+            </tr>
+            <tr>
+                <th style="width: 80px;">Id</th>
+                <th>Name</th>
+                <th style="width: 150px;">Movie Count</th>
+                <th style="width: 215px;">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (!Model.Any())
+            {
+                <tr>
+                    <td colspan="4" class="text-center text-muted py-3">No genres found.</td>
+                </tr>
+            }
+            else
+            {
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td class="text-end">@item.Id</td>
+                        <td>@item.Name</td>
+                        <td class="text-end">@(item.Movies?.Count ?? 0)</td>
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-outline-success">Edit</a>
+                            <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-outline-primary">Details</a>
+                            <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-outline-danger">Delete</a>
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>

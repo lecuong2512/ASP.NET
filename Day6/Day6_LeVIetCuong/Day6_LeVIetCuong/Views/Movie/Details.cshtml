@@ -1,0 +1,28 @@
+@model Day6_LeVIetCuong.Models.Movie
+
+@{
+    ViewData["Title"] = "Movie Details";
+}
+
+<div class="container mt-4">
+    <h2>Movie Details</h2>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">Id</dt>
+        <dd class="col-sm-10">@Model.Id</dd>
+
+        <dt class="col-sm-2">Title</dt>
+        <dd class="col-sm-10">@Model.Title</dd>
+
+        <dt class="col-sm-2">Release Date</dt>
+        <dd class="col-sm-10">@Model.ReleaseDate.ToString("yyyy-MM-dd")</dd>
+
+        <dt class="col-sm-2">Duration</dt>
+        <dd class="col-sm-10">@Model.Duration phút</dd>
+
+        <dt class="col-sm-2">Genre</dt>
+        <dd class="col-sm-10">@Model.Genre?.Name</dd>
+    </dl>
+    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">Edit</a>
+    <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+</div>
